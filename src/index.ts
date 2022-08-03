@@ -1,5 +1,8 @@
 import express from 'express';
 import mongoose from 'mongoose';
+import { Book } from './entities/book';
+import { DigitalBook } from './entities/digitalBook';
+import { makeCreateBookService } from './factory/createBookService.factory';
 
 const authorSchema = new mongoose.Schema({
   nome: 'String',
@@ -15,8 +18,8 @@ const bookSchema = new mongoose.Schema({
   compativel_kindle: 'Boolean',
 });
 
-const BookModel = mongoose.model('Book', bookSchema);
-const AuthorModel = mongoose.model('Author', authorSchema);
+export const BookModel = mongoose.model('Book', bookSchema);
+export const AuthorModel = mongoose.model('Author', authorSchema);
 
 const app = express();
 app.use(express.json());
@@ -73,54 +76,38 @@ app.get('/books', async (req, res) => {
 });
 
 app.post('/books', async (req, res) => {
-  const { title, qtdPages, authorId, publishDate, isDigital, sizeInKBytes, kindleCompatible } =
-    req.body;
+  try {
+    const { title, qtdPages, authorId, publishDate, isDigital, sizeInKBytes, kindleCompatible } =
+      req.body;
 
-  if (isDigital) {
-    if (!sizeInKBytes || sizeInKBytes == 0) {
-      return res.status(404).send({
-        message: 'livro digital deve ter sizeInKBytes ser maior que zero',
-        data: null,
-      });
+    const createBookService = makeCreateBookService();
+
+    let book: Book;
+    if (isDigital) {
+      book = new DigitalBook(
+        title,
+        qtdPages,
+        authorId,
+        new Date(publishDate),
+        sizeInKBytes,
+        kindleCompatible,
+      );
+    } else {
+      book = new Book(title, qtdPages, authorId, new Date(publishDate));
     }
-  }
 
-  const date = new Date(publishDate);
-  if (date.getTime() > new Date().getTime()) {
-    return res.status(404).send({
-      message: 'a data de publicação não pode ser no futuro',
+    const createdBook = await createBookService.createBook(book);
+
+    return res.status(200).send({
+      message: 'book created successfuly',
+      data: createdBook,
+    });
+  } catch (error: any) {
+    return res.status(400).send({
+      message: error.message,
       data: null,
     });
   }
-
-  const authorFound = await AuthorModel.findOne({ _id: authorId });
-  if (!authorFound) {
-    return res.status(404).send({
-      message: 'o autor informado não existe',
-      data: null,
-    });
-  }
-
-  authorFound.quantidade_livros++;
-
-  await AuthorModel.updateOne(
-    { _id: authorId },
-    { quantidade_livros: authorFound.quantidade_livros },
-  );
-
-  const bookCreated = await BookModel.create({
-    titulo: title,
-    qtd_paginas: qtdPages,
-    autor: authorId,
-    data_publicacao: new Date(publishDate),
-    compativel_kindle: kindleCompatible == true,
-    tamanho: sizeInKBytes,
-  }).then((obj) => obj.populate('autor'));
-
-  return res.status(200).send({
-    message: 'book created successfuly',
-    data: bookCreated.toObject(),
-  });
 });
 
 app.listen(3000, () => {
