@@ -73,10 +73,10 @@ app.get('/books', async (req, res) => {
 });
 
 app.post('/books', async (req, res) => {
-  const { title, qtdPages, authorId, publishDate, isDitital, sizeInKBytes, kindleCompatible } =
+  const { title, qtdPages, authorId, publishDate, isDigital, sizeInKBytes, kindleCompatible } =
     req.body;
 
-  if (isDitital) {
+  if (isDigital) {
     if (!sizeInKBytes || sizeInKBytes == 0) {
       return res.status(404).send({
         message: 'livro digital deve ter sizeInKBytes ser maior que zero',
