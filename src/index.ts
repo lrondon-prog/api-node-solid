@@ -24,7 +24,7 @@ export const AuthorModel = mongoose.model('Author', authorSchema);
 const app = express();
 app.use(express.json());
 
-const urlBD = 'mongodb://localhost/treinamento-solid-renave';
+const urlBD = 'mongodb://localhost:27017/api';
 mongoose
   .connect(urlBD)
   .then(() => {

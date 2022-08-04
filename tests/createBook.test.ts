@@ -4,7 +4,7 @@ test('deve obter sucesso ao cadastrar um livro fisico', async () => {
   const inputData = {
     title: 'Clean Code',
     qtdPages: 421,
-    authorId: '62eaca99dd7850bc9adc4174',
+    authorId: '62ec20dd8fa377a37ea900a4',
     publishDate: '2008-08-01',
   };
 
@@ -47,7 +47,7 @@ test('deve obter sucesso ao cadastrar um livro digital', async () => {
   const inputData = {
     title: 'Livro teste',
     qtdPages: 421,
-    authorId: '62eaca99dd7850bc9adc4174',
+    authorId: '62ec20dd8fa377a37ea900a4',
     publishDate: '2008-08-01',
     isDigital: true,
     sizeInKBytes: 100,
