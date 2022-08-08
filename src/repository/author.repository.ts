@@ -1,11 +1,9 @@
-import { AuthorModel } from './../index';
+import { Author } from '../entities/author';
 
-export class AuthorRepository {
-  public async findAuthorById(id: string) {
-    return await AuthorModel.findOne({ _id: id });
-  }
+export interface AuthorRepository {
+  create(author: Author): Promise<Author>;
 
-  public async updateQtdBooksAuthor(authorId: string, qtdBooks: number) {
-    await AuthorModel.updateOne({ _id: authorId }, { quantidade_livros: qtdBooks });
-  }
+  findAuthorById(id: string): Promise< any >;
+
+  updateQtdBooksAuthor(authorId: string, qtdBooks: number): Promise<void>;
 }

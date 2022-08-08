@@ -1,7 +1,7 @@
 import { Book } from '../entities/book';
-import { IBookRepository } from './ibook.repository';
+import { BookRepository } from './book.repository';
 
-export class FakeRepository implements IBookRepository {
+export class FakeRepository implements BookRepository {
   private list: Book[] = [];
 
   async create(book: Book): Promise<Book> {

@@ -1,11 +1,11 @@
 import { Book } from '../entities/book';
 import { DigitalBook } from '../entities/digitalBook';
 import { AuthorRepository } from '../repository/author.repository';
-import { IBookRepository } from '../repository/ibook.repository';
+import { BookRepository } from '../repository/book.repository';
 
 export class CreateBookService {
   constructor(
-    private readonly bookRepository: IBookRepository,
+    private readonly bookRepository: BookRepository,
     private readonly authorRepository: AuthorRepository,
   ) {}
 
