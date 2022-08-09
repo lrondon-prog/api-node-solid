@@ -17,8 +17,8 @@ export class CreateBookService {
       throw new Error('o autor informado não existe');
     }
 
-    authorFound.quantidade_livros++;
-    await this.authorRepository.updateQtdBooksAuthor(book.authorId, authorFound.quantidade_livros);
+    authorFound.qtdBooks++;
+    await this.authorRepository.updateQtdBooksAuthor(book.authorId, authorFound.qtdBooks);
 
     const bookCreated = await this.bookRepository.create(book);
 

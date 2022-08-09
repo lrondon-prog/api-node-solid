@@ -10,7 +10,7 @@ export class AuthorImplementationRepository implements AuthorRepository {
       const bdAuthor = await AuthorModel.create({
         nome: author.name,
         quantidade_livros: author.qtdBooks,
-      }).then((obj: any) => obj.populate('autor'));
+      })
 
       authorCreated = new Author(
         bdAuthor.nome,
@@ -21,7 +21,15 @@ export class AuthorImplementationRepository implements AuthorRepository {
     } 
 
   public async findAuthorById(id: string): Promise<Author | null >{
-    return await AuthorModel.findOne({ _id: id });
+    const bdAuthor = await AuthorModel.findOne({ _id: id })
+    if(bdAuthor){
+      const authorFound = new Author (
+        bdAuthor.nome,
+        bdAuthor.quantidade_livros
+        );
+        return authorFound;
+    }
+    return null;
   }
 
   public async updateQtdBooksAuthor(authorId: string, qtdBooks: number): Promise<void> {
