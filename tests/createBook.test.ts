@@ -2,9 +2,9 @@ import supertest from 'supertest';
 
 test('deve obter sucesso ao cadastrar um livro fisico', async () => {
   const inputData = {
-    title: 'Clean Code',
+    title: 'Como jogar pb',
     qtdPages: 421,
-    authorId: '62ec20dd8fa377a37ea900a4',
+    authorId: '62f42da421351fd868ab621d',
     publishDate: '2008-08-01',
   };
 
@@ -45,9 +45,9 @@ test('deve falhar ao tentar cadastrar um livro com uma data de publicação no f
 test('deve obter sucesso ao cadastrar um livro digital', async () => {
 
   const inputData = {
-    title: 'Livro teste',
+    title: 'Como jogar pb',
     qtdPages: 421,
-    authorId: '62ec20dd8fa377a37ea900a4',
+    authorId: '62f42da421351fd868ab621d',
     publishDate: '2008-08-01',
     isDigital: true,
     sizeInKBytes: 100,
@@ -65,9 +65,9 @@ test('deve obter sucesso ao cadastrar um livro digital', async () => {
 test('deve falhar ao tentar cadastrar um livro digital sem informar sizeInKBytes', async () => {
 
   const inputData = {
-    title: 'Livro teste',
+    title: 'Aprendendo as praticas do SOLID',
     qtdPages: 421,
-    authorId: '62eaca99dd7850bc9adc4174',
+    authorId: '62ec21a68fa377a37ea900ab',
     publishDate: '2008-08-01',
     isDigital: true,
     kindleCompatible: true,

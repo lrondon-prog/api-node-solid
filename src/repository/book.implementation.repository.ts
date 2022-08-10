@@ -1,6 +1,6 @@
 import { Book } from '../entities/book';
 import { DigitalBook } from '../entities/digitalBook';
-import { BookModel } from '../index';
+import { BookModel } from '../schemas/bookModel';
 import { BookRepository } from './book.repository';
 
 export class BookImplementationRepository implements BookRepository {
@@ -45,5 +45,35 @@ export class BookImplementationRepository implements BookRepository {
     }
 
     return bookCreated;
+  }
+
+  public async findAll(): Promise<Book[]> {
+    const bdBooks = await BookModel.find({});
+    const books: Book[] = [];
+
+    for (const bdBook of bdBooks) {
+      if (bdBook.tamanho) {
+        const book = new DigitalBook(
+          bdBook.titulo as string,
+          bdBook.qtd_paginas as number,
+          bdBook.autor as string,
+          bdBook.data_publicacao as Date,
+          bdBook.tamanho as number,
+          bdBook.compativel_kindle as boolean,
+          bdBook._id.toString()
+        )
+        books.push(book)
+      } else {
+        const book = new Book(
+          bdBook.titulo as string,
+          bdBook.qtd_paginas as number,
+          bdBook.autor as string,
+          bdBook.data_publicacao as Date,
+          bdBook._id.toString()
+        )
+        books.push(book)
+      }
+    }
+    return books;
   }
 }
