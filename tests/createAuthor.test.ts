@@ -13,11 +13,11 @@ test('deve obter sucesso ao cadastrar um autor', async () => {
 
 test('deve falhar ao tentar cadastrar um autor sem nome', async () => {
   const inputData = {
-    name: '',
+
   };
 
   const response = await supertest('http://localhost:3000').post('/authors').send(inputData);
 
   expect(response.status).toBe(400);
-  expect(response.body.message).toBe('autor é obrigatório e não pode ser vazio');
+  expect(response.body.message).toBe('Author validation failed: nome: Path `nome` is required.');
 });
