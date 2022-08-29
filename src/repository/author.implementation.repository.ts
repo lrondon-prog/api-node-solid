@@ -1,5 +1,5 @@
 import { Author } from '../entities/author';
-import { AuthorModel } from '../schemas/authorModel';
+import { AuthorModel } from '../schemas/authorSchema';
 
 import { AuthorRepository } from './author.repository';
 

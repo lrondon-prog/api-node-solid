@@ -27,27 +27,9 @@ routesBook.get('/books', async (req, res) => {
 
 routesBook.post('/books', async (req, res) => {
     try {
-        const { title, qtdPages, authorId, publishDate, isDigital, sizeInKBytes, kindleCompatible } =
-            req.body;
 
         const createBookService = makeCreateBookService();
-
-        let book: Book;
-        if (isDigital) {
-            book = new DigitalBook(
-                title,
-                qtdPages,
-                authorId,
-                new Date(publishDate),
-                sizeInKBytes,
-                kindleCompatible,
-            );
-        } else {
-            book = new Book(title, qtdPages, authorId, new Date(publishDate));
-        }
-
-        const createdBook = await createBookService.createBook(book);
-
+        const createdBook = await createBookService.createBook(req.body);
         return res.status(200).send({
             message: 'book created successfuly',
             data: createdBook,

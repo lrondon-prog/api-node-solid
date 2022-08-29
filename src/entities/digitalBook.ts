@@ -1,16 +1,17 @@
+import { Author } from './author';
 import { Book } from './book';
 
 export class DigitalBook extends Book {
   constructor(
     public title: string,
     public qtdPages: number,
-    public authorId: string,
+    public author: Author,
     public publishDate: Date,
     public sizeInKBytes: number,
     public kindleCompatible: boolean,
     public id?: string,
   ) {
-    super(title, qtdPages, authorId, publishDate, id);
+    super(title, qtdPages, author, publishDate, id);
   }
 
   public validate(): void {

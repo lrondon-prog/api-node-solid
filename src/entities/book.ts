@@ -1,9 +1,11 @@
+import { Author } from "./author";
+
 export class Book {
   
   constructor(
     public title: string,
     public qtdPages: number,
-    public authorId: string,
+    public author: Author,
     public publishDate: Date,
     public id?: string
   ) {}
